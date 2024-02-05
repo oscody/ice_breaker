@@ -2,12 +2,14 @@ from dotenv import load_dotenv
 from langchain.chains import LLMChain
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
+from agents.linkedin_lookup_agent import lookup as linked_profile_agent
 from third_party.linkedin import scrape_linkedin_profile
 
 if __name__ == "__main__":
     load_dotenv()
-
     print("Hello LangChain")
+
+    linked_profile_url = linked_profile_agent(name="Oneil Bogle")
 
 
     summary_template = """
@@ -24,9 +26,11 @@ if __name__ == "__main__":
 
     chain = LLMChain(llm=llm, prompt=summary_prompt_template)
 
+
+
     linkedin_data = scrape_linkedin_profile(
 
-            linkedin_profile_url = 'https://www.linkedin.com/in/oneilb/'
+            linkedin_profile_url = linked_profile_url
             
             )
 
